@@ -1,0 +1,399 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>EveryCam — Datenschutzerklärung / Privacy Policy</title>
+<style>
+  :root {
+    --background-primary: #F4E9D8;
+    --surface-panel: #EDDCC0;
+    --border-subtle: #D8C3A0;
+    --text-primary: #241B12;
+    --text-secondary: #6B5B47;
+    --action-tag: #C99B5B;
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0;
+    padding: 0;
+    background: var(--background-primary);
+    color: var(--text-primary);
+    font-family: -apple-system, "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 32px 20px 80px;
+  }
+  header.top {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-bottom: 28px;
+  }
+  h1 {
+    font-size: 1.6rem;
+    margin: 0;
+    font-weight: 700;
+  }
+  .meta {
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+  }
+  .lang-switch {
+    display: inline-flex;
+    background: var(--surface-panel);
+    border: 1px solid var(--border-subtle);
+    border-radius: 999px;
+    padding: 3px;
+    gap: 2px;
+    align-self: flex-start;
+  }
+  .lang-switch button {
+    appearance: none;
+    border: none;
+    background: transparent;
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+    font-weight: 600;
+    padding: 7px 16px;
+    border-radius: 999px;
+    cursor: pointer;
+    font-family: inherit;
+  }
+  .lang-switch button.active {
+    background: var(--background-primary);
+    color: var(--text-primary);
+  }
+  .provider-card {
+    background: var(--surface-panel);
+    border: 1px solid var(--border-subtle);
+    border-radius: 12px;
+    padding: 16px 18px;
+    margin: 20px 0 32px;
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+  }
+  .provider-card strong {
+    color: var(--text-primary);
+  }
+  section {
+    margin-bottom: 28px;
+  }
+  section h2 {
+    font-size: 1.1rem;
+    margin: 0 0 10px;
+    font-weight: 700;
+  }
+  section p, section li {
+    line-height: 1.65;
+    font-size: 0.98rem;
+    color: var(--text-primary);
+  }
+  section ul {
+    padding-left: 1.2em;
+  }
+  a { color: var(--text-primary); }
+  footer {
+    margin-top: 48px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border-subtle);
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+  }
+  [data-lang-content] { display: none; }
+  [data-lang-content].active { display: block; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <div class="lang-switch" role="group" aria-label="Language">
+      <button type="button" data-lang="de" class="active">DE</button>
+      <button type="button" data-lang="en">EN</button>
+      <button type="button" data-lang="es">ES</button>
+      <button type="button" data-lang="pt">PT</button>
+    </div>
+    <div>
+      <h1 data-i18n="title"></h1>
+      <div class="meta" data-i18n="meta"></div>
+    </div>
+  </header>
+
+  <div class="provider-card">
+    <strong>Torque Soul Media</strong><br>
+    <span data-i18n="owner"></span><br>
+    Bergstrasse 19<br>
+    <span data-i18n="cityLine"></span><br>
+    E-Mail: torquesoul@icloud.com
+  </div>
+
+  <main id="content"></main>
+
+  <footer data-i18n="footer"></footer>
+</div>
+
+<script>
+const provider = {
+  cityLine: {
+    de: "35614 Asslar, Deutschland",
+    en: "35614 Asslar, Germany",
+    es: "35614 Asslar, Alemania",
+    pt: "35614 Asslar, Alemanha"
+  },
+  owner: {
+    de: "Inhaber: Steffen Adamczyk",
+    en: "Owner: Steffen Adamczyk",
+    es: "Titular: Steffen Adamczyk",
+    pt: "Titular: Steffen Adamczyk"
+  }
+};
+
+const meta = {
+  title: {
+    de: "Datenschutzerklärung",
+    en: "Privacy Policy",
+    es: "Política de Privacidad",
+    pt: "Política de Privacidade"
+  },
+  meta: {
+    de: "EveryCam · Stand: 27. Juli 2026 · Version 1.0",
+    en: "EveryCam · Last updated: July 27, 2026 · Version 1.0",
+    es: "EveryCam · Última actualización: 27 de julio de 2026 · Versión 1.0",
+    pt: "EveryCam · Última atualização: 27 de julho de 2026 · Versão 1.0"
+  },
+  footer: {
+    de: "Diese Datenschutzerklärung ergänzt die Nutzungsbedingungen von EveryCam und gilt zusätzlich zu diesen.",
+    en: "This Privacy Policy supplements EveryCam's Terms & Conditions and applies in addition to them.",
+    es: "Esta Política de Privacidad complementa las Condiciones de Uso de EveryCam y se aplica adicionalmente a ellas.",
+    pt: "Esta Política de Privacidade complementa os Termos e Condições do EveryCam e se aplica adicionalmente a eles."
+  }
+};
+
+// Jede Sektion: { heading: {de,en,es,pt}, body: [ {de,en,es,pt}, ... ] } — body-Einträge sind Absätze oder Listen (Array = <ul>).
+const sections = [
+  {
+    heading: { de: "1. Verantwortlicher", en: "1. Data Controller", es: "1. Responsable del tratamiento", pt: "1. Controlador dos dados" },
+    body: [
+      {
+        de: "Verantwortlicher im Sinne der Datenschutz-Grundverordnung (DSGVO) ist:",
+        en: "The data controller within the meaning of the General Data Protection Regulation (GDPR) is:",
+        es: "El responsable del tratamiento en el sentido del Reglamento General de Protección de Datos (RGPD) es:",
+        pt: "O controlador dos dados nos termos do Regulamento Geral de Proteção de Dados (RGPD) é:"
+      },
+      {
+        de: "Torque Soul Media, Inhaber Steffen Adamczyk, Bergstrasse 19, 35614 Asslar, Deutschland, E-Mail: torquesoul@icloud.com (dieselben Angaben wie im Impressum der App).",
+        en: "Torque Soul Media, owner Steffen Adamczyk, Bergstrasse 19, 35614 Asslar, Germany, email: torquesoul@icloud.com (the same details as in the App's legal notice).",
+        es: "Torque Soul Media, titular Steffen Adamczyk, Bergstrasse 19, 35614 Asslar, Alemania, correo electrónico: torquesoul@icloud.com (los mismos datos que en el aviso legal de la App).",
+        pt: "Torque Soul Media, titular Steffen Adamczyk, Bergstrasse 19, 35614 Asslar, Alemanha, e-mail: torquesoul@icloud.com (os mesmos dados do aviso legal do App)."
+      }
+    ]
+  },
+  {
+    heading: { de: "2. Grundprinzip: vollständig lokale Verarbeitung", en: "2. Core Principle: Fully Local Processing", es: "2. Principio fundamental: procesamiento totalmente local", pt: "2. Princípio fundamental: processamento totalmente local" },
+    body: [
+      {
+        de: "EveryCam arbeitet vollständig offline. Es findet keine Übertragung von Fotos, Videos oder sonstigen personenbezogenen Daten an den Anbieter oder an Dritte statt. Sämtliche Aufnahmen und Metadaten (Sammlungsnamen, Tags, Aufnahmedatum) werden ausschließlich lokal im Speicher Ihres Geräts (App-Sandbox, sichtbar unter „Auf diesem iPhone“ in der Dateien-App) abgelegt.",
+        en: "EveryCam operates entirely offline. No photos, videos, or other personal data are transmitted to the Provider or to third parties. All recordings and metadata (collection names, tags, capture date) are stored exclusively locally in your device's storage (app sandbox, visible under \"On My iPhone\" in the Files app).",
+        es: "EveryCam funciona completamente sin conexión. No se transmiten fotos, videos ni ningún otro dato personal al proveedor ni a terceros. Todas las capturas y metadatos (nombres de colecciones, tags, fecha de captura) se almacenan exclusivamente de forma local en el almacenamiento de su dispositivo (sandbox de la app, visible en «En mi iPhone» dentro de la app Archivos).",
+        pt: "O EveryCam funciona totalmente offline. Nenhuma foto, vídeo ou outro dado pessoal é transmitido ao fornecedor ou a terceiros. Todas as capturas e metadados (nomes de coleções, tags, data da captura) são armazenados exclusivamente de forma local no armazenamento do seu aparelho (sandbox do app, visível em \"No meu iPhone\" no app Arquivos)."
+      }
+    ]
+  },
+  {
+    heading: { de: "3. Kamera und Mikrofon", en: "3. Camera and Microphone", es: "3. Cámara y micrófono", pt: "3. Câmera e microfone" },
+    body: [
+      {
+        de: "Die App benötigt Zugriff auf Kamera und Mikrofon, um Fotos und Videos aufzunehmen. Dieser Zugriff dient ausschließlich der lokalen Aufnahme auf Ihrem Gerät. iOS fragt diese Berechtigung systemseitig ab; Sie können sie jederzeit in den iOS-Einstellungen widerrufen. Ohne diese Berechtigung ist eine Aufnahme nicht möglich.",
+        en: "The App requires access to the camera and microphone to capture photos and videos. This access serves exclusively for local capture on your device. iOS requests this permission at the system level; you may revoke it at any time in the iOS Settings. Without this permission, capture is not possible.",
+        es: "La App necesita acceso a la cámara y al micrófono para capturar fotos y videos. Este acceso se utiliza exclusivamente para la captura local en su dispositivo. iOS solicita este permiso a nivel de sistema; puede revocarlo en cualquier momento en los Ajustes de iOS. Sin este permiso, la captura no es posible.",
+        pt: "O App precisa de acesso à câmera e ao microfone para capturar fotos e vídeos. Esse acesso serve exclusivamente para a captura local no seu aparelho. O iOS solicita essa permissão em nível de sistema; você pode revogá-la a qualquer momento nos Ajustes do iOS. Sem essa permissão, a captura não é possível."
+      }
+    ]
+  },
+  {
+    heading: { de: "4. Von Ihnen erstellte Inhalte", en: "4. Content You Create", es: "4. Contenido creado por usted", pt: "4. Conteúdo criado por você" },
+    body: [
+      {
+        de: "Fotos und Videos, die Sie mit EveryCam aufnehmen, sowie die von Ihnen vergebenen Sammlungs- und Tag-Namen verbleiben ausschließlich auf Ihrem Gerät. Der Anbieter hat zu keinem Zeitpunkt Zugriff auf diese Inhalte. Enthalten Ihre Aufnahmen personenbezogene Daten Dritter (z. B. weil Sie andere Personen filmen), sind Sie als Nutzer bzw. Nutzerin allein für die Einhaltung der einschlägigen Vorschriften verantwortlich — insbesondere Recht am eigenen Bild, Persönlichkeitsrechte und Datenschutzrecht (siehe auch Ziffer 6.3 der Nutzungsbedingungen).",
+        en: "Photos and videos you capture with EveryCam, as well as the collection and tag names you assign, remain exclusively on your device. The Provider has no access to this content at any time. If your recordings contain personal data of third parties (e.g. because you film other people), you as the user are solely responsible for complying with the applicable regulations — in particular the right to one's own image, personality rights, and data protection law (see also Section 6.3 of the Terms & Conditions).",
+        es: "Las fotos y videos que capture con EveryCam, así como los nombres de colecciones y tags que usted asigne, permanecen exclusivamente en su dispositivo. El proveedor no tiene acceso a este contenido en ningún momento. Si sus grabaciones contienen datos personales de terceros (p. ej. porque graba a otras personas), usted, como usuario, es el único responsable de cumplir con la normativa aplicable — en particular el derecho a la propia imagen, los derechos de la personalidad y la normativa de protección de datos (véase también el punto 6.3 de las Condiciones de Uso).",
+        pt: "As fotos e vídeos que você captura com o EveryCam, bem como os nomes de coleções e tags que você atribui, permanecem exclusivamente no seu aparelho. O fornecedor não tem acesso a esse conteúdo em nenhum momento. Se suas gravações contiverem dados pessoais de terceiros (por exemplo, por você filmar outras pessoas), você, como usuário, é o único responsável por cumprir a legislação aplicável — em especial o direito à própria imagem, os direitos de personalidade e a legislação de proteção de dados (ver também o item 6.3 dos Termos e Condições)."
+      }
+    ]
+  },
+  {
+    heading: { de: "5. Teilen von Inhalten", en: "5. Sharing Content", es: "5. Compartir contenido", pt: "5. Compartilhamento de conteúdo" },
+    body: [
+      {
+        de: "Ein Teilen von Aufnahmen erfolgt ausschließlich, wenn Sie dies aktiv über die native iOS-Teilen-Funktion (Share Sheet) auslösen, z. B. um eine Aufnahme per Mail, Messenger oder AirDrop zu versenden. Der Anbieter ist an diesem Vorgang nicht beteiligt und erhält keine Kenntnis davon.",
+        en: "Content is shared only if you actively trigger this via the native iOS sharing function (Share Sheet), e.g. to send a recording via email, messaging app, or AirDrop. The Provider is not involved in this process and has no knowledge of it.",
+        es: "El contenido solo se comparte si usted activa expresamente la función nativa de compartir de iOS (hoja de compartir), por ejemplo, para enviar una captura por correo electrónico, mensajería o AirDrop. El proveedor no participa en este proceso ni tiene conocimiento de él.",
+        pt: "O compartilhamento de conteúdo só ocorre se você acionar ativamente a função nativa de compartilhamento do iOS (folha de compartilhamento), por exemplo, para enviar uma captura por e-mail, mensageiro ou AirDrop. O fornecedor não participa desse processo e não tem conhecimento dele."
+      }
+    ]
+  },
+  {
+    heading: { de: "6. Keine Analyse, kein Tracking", en: "6. No Analytics, No Tracking", es: "6. Sin análisis ni seguimiento", pt: "6. Sem análise, sem rastreamento" },
+    body: [
+      {
+        de: "EveryCam enthält keine Analyse-, Tracking- oder Werbe-SDKs, keine Crash-Reporting-Dienste und keine Nutzerkonten. Es werden keine Nutzungsdaten an den Anbieter oder Dritte übermittelt.",
+        en: "EveryCam contains no analytics, tracking, or advertising SDKs, no crash-reporting services, and no user accounts. No usage data is transmitted to the Provider or to third parties.",
+        es: "EveryCam no contiene SDK de análisis, seguimiento o publicidad, ni servicios de reporte de fallos, ni cuentas de usuario. No se transmiten datos de uso al proveedor ni a terceros.",
+        pt: "O EveryCam não contém SDKs de análise, rastreamento ou publicidade, nem serviços de relatório de falhas, nem contas de usuário. Nenhum dado de uso é transmitido ao fornecedor ou a terceiros."
+      }
+    ]
+  },
+  {
+    heading: { de: "7. Kauf über den App Store", en: "7. Purchase via the App Store", es: "7. Compra a través del App Store", pt: "7. Compra pela App Store" },
+    body: [
+      {
+        de: "Der Kauf der App erfolgt ausschließlich über den Apple App Store (bzw. künftig Google Play). Für die Verarbeitung von Daten im Zusammenhang mit Kauf, Zahlung und Kontoverwaltung ist ausschließlich der jeweilige Store-Betreiber (Apple bzw. Google) verantwortlich; es gelten dessen eigene Datenschutzerklärungen.",
+        en: "The App is purchased exclusively via the Apple App Store (or, in the future, Google Play). The respective store operator (Apple or Google) is solely responsible for processing data related to purchase, payment, and account management; their own privacy policies apply.",
+        es: "La compra de la App se realiza exclusivamente a través de la Apple App Store (o, en el futuro, Google Play). El respectivo operador de la tienda (Apple o Google) es el único responsable del tratamiento de los datos relacionados con la compra, el pago y la gestión de la cuenta; se aplican sus propias políticas de privacidad.",
+        pt: "A compra do App é feita exclusivamente pela Apple App Store (ou, futuramente, pelo Google Play). O respectivo operador da loja (Apple ou Google) é o único responsável pelo tratamento de dados relacionados à compra, ao pagamento e à gestão da conta; aplicam-se as próprias políticas de privacidade deles."
+      }
+    ]
+  },
+  {
+    heading: { de: "8. Keine Cookies, keine Standortdaten", en: "8. No Cookies, No Location Data", es: "8. Sin cookies, sin datos de ubicación", pt: "8. Sem cookies, sem dados de localização" },
+    body: [
+      {
+        de: "Als native, vollständig offline arbeitende App verwendet EveryCam keine Cookies. Es findet keine Erfassung oder Speicherung von Standortdaten statt.",
+        en: "As a native app that operates entirely offline, EveryCam does not use cookies. No location data is collected or stored.",
+        es: "Como aplicación nativa que funciona completamente sin conexión, EveryCam no utiliza cookies. No se recopilan ni almacenan datos de ubicación.",
+        pt: "Por ser um aplicativo nativo que funciona totalmente offline, o EveryCam não utiliza cookies. Nenhum dado de localização é coletado ou armazenado."
+      }
+    ]
+  },
+  {
+    heading: { de: "9. Speicherdauer", en: "9. Retention Period", es: "9. Duración del almacenamiento", pt: "9. Duração do armazenamento" },
+    body: [
+      {
+        de: "Da sämtliche Daten ausschließlich lokal gespeichert werden, bestimmen Sie die Speicherdauer selbst — durch Löschen einzelner Aufnahmen, ganzer Sammlungen oder durch Deinstallation der App. Der Anbieter hat keinen Zugriff auf diese Daten und kann sie daher weder einsehen noch selbst löschen.",
+        en: "Since all data is stored exclusively locally, you determine the retention period yourself — by deleting individual recordings, entire collections, or by uninstalling the App. The Provider has no access to this data and can therefore neither view nor delete it.",
+        es: "Dado que todos los datos se almacenan exclusivamente de forma local, usted determina la duración del almacenamiento — eliminando capturas individuales, colecciones completas o desinstalando la App. El proveedor no tiene acceso a estos datos y, por lo tanto, no puede verlos ni eliminarlos.",
+        pt: "Como todos os dados são armazenados exclusivamente de forma local, você determina a duração do armazenamento — excluindo capturas individuais, coleções inteiras ou desinstalando o App. O fornecedor não tem acesso a esses dados e, portanto, não pode visualizá-los nem excluí-los."
+      },
+      {
+        de: "Genau daraus folgt auch das Risiko: Da EveryCam keine Cloud-Sicherung vorsieht, können Aufnahmen bei Verlust, Beschädigung, Zurücksetzen oder Deinstallation des Geräts bzw. der App unwiederbringlich verloren gehen. Der Anbieter empfiehlt eine regelmäßige eigene Datensicherung und haftet nicht für Schäden oder Datenverluste, die auf eine unterlassene Sicherung zurückzuführen sind (siehe Ziffer 6.4 und 11.5 der Nutzungsbedingungen).",
+        en: "This also implies the risk: since EveryCam does not provide cloud backup, recordings may be irretrievably lost in the event of loss, damage, reset, or uninstallation of the device or the App. The Provider recommends regular independent data backups and is not liable for damages or data loss resulting from a failure to back up (see Sections 6.4 and 11.5 of the Terms & Conditions).",
+        es: "De ello se deriva también el riesgo: dado que EveryCam no ofrece copia de seguridad en la nube, las capturas pueden perderse de forma irrecuperable en caso de pérdida, daño, restablecimiento o desinstalación del dispositivo o de la App. El proveedor recomienda realizar copias de seguridad propias con regularidad y no se hace responsable de daños o pérdidas de datos derivados de la falta de dicha copia de seguridad (véanse los puntos 6.4 y 11.5 de las Condiciones de Uso).",
+        pt: "Disso também decorre o risco: como o EveryCam não oferece backup em nuvem, as capturas podem ser perdidas de forma irrecuperável em caso de perda, dano, redefinição ou desinstalação do aparelho ou do App. O fornecedor recomenda um backup próprio regular dos dados e não se responsabiliza por danos ou perdas de dados decorrentes da ausência desse backup (ver itens 6.4 e 11.5 dos Termos e Condições)."
+      }
+    ]
+  },
+  {
+    heading: { de: "10. Ihre Rechte", en: "10. Your Rights", es: "10. Sus derechos", pt: "10. Seus direitos" },
+    body: [
+      {
+        de: "Soweit im Rahmen der Nutzung von EveryCam personenbezogene Daten betroffen sind, stehen Ihnen nach der Datenschutz-Grundverordnung (DSGVO) unter anderem folgende Rechte zu:",
+        en: "To the extent personal data is affected in connection with your use of EveryCam, you have the following rights under the General Data Protection Regulation (GDPR), among others:",
+        es: "En la medida en que se vean afectados datos personales en relación con el uso de EveryCam, usted tiene, entre otros, los siguientes derechos conforme al Reglamento General de Protección de Datos (RGPD):",
+        pt: "Na medida em que dados pessoais sejam afetados em relação ao uso do EveryCam, você tem, entre outros, os seguintes direitos nos termos do Regulamento Geral de Proteção de Dados (RGPD):"
+      },
+      [
+        { de: "Auskunft (Art. 15 DSGVO)", en: "Right of access (Art. 15 GDPR)", es: "Derecho de acceso (art. 15 RGPD)", pt: "Direito de acesso (art. 15 RGPD)" },
+        { de: "Berichtigung (Art. 16 DSGVO)", en: "Right to rectification (Art. 16 GDPR)", es: "Derecho de rectificación (art. 16 RGPD)", pt: "Direito de retificação (art. 16 RGPD)" },
+        { de: "Löschung (Art. 17 DSGVO)", en: "Right to erasure (Art. 17 GDPR)", es: "Derecho de supresión (art. 17 RGPD)", pt: "Direito ao apagamento (art. 17 RGPD)" },
+        { de: "Einschränkung der Verarbeitung (Art. 18 DSGVO)", en: "Right to restriction of processing (Art. 18 GDPR)", es: "Derecho a la limitación del tratamiento (art. 18 RGPD)", pt: "Direito à limitação do tratamento (art. 18 RGPD)" },
+        { de: "Datenübertragbarkeit (Art. 20 DSGVO)", en: "Right to data portability (Art. 20 GDPR)", es: "Derecho a la portabilidad de los datos (art. 20 RGPD)", pt: "Direito à portabilidade dos dados (art. 20 RGPD)" },
+        { de: "Widerspruch (Art. 21 DSGVO)", en: "Right to object (Art. 21 GDPR)", es: "Derecho de oposición (art. 21 RGPD)", pt: "Direito de oposição (art. 21 RGPD)" }
+      ],
+      {
+        de: "Da der Anbieter keinen Zugriff auf Ihre lokal gespeicherten Aufnahmen hat, können Sie diese Rechte in Bezug auf Ihre Aufnahmen jederzeit selbst direkt in der App ausüben (Ansehen, Ändern der Zuordnung, Löschen). Für Anfragen zu dieser Datenschutzerklärung wenden Sie sich an die unten genannte Kontaktadresse. Ihnen steht zudem ein Beschwerderecht bei einer Datenschutz-Aufsichtsbehörde zu.",
+        en: "Since the Provider has no access to your locally stored recordings, you can exercise these rights with respect to your recordings yourself, at any time, directly within the App (viewing, changing the assignment, deleting). For inquiries regarding this Privacy Policy, please use the contact details below. You also have the right to lodge a complaint with a data protection supervisory authority.",
+        es: "Dado que el proveedor no tiene acceso a sus capturas almacenadas localmente, usted puede ejercer estos derechos respecto de sus capturas por sí mismo, en cualquier momento, directamente dentro de la App (visualizar, cambiar la asignación, eliminar). Para consultas sobre esta Política de Privacidad, utilice los datos de contacto indicados a continuación. Además, tiene derecho a presentar una reclamación ante una autoridad de control en materia de protección de datos.",
+        pt: "Como o fornecedor não tem acesso às suas capturas armazenadas localmente, você pode exercer esses direitos em relação às suas capturas por conta própria, a qualquer momento, diretamente no App (visualizar, alterar a atribuição, excluir). Para dúvidas sobre esta Política de Privacidade, utilize os dados de contato abaixo. Você também tem o direito de apresentar reclamação a uma autoridade de supervisão de proteção de dados."
+      }
+    ]
+  },
+  {
+    heading: { de: "11. Minderjährige", en: "11. Minors", es: "11. Menores de edad", pt: "11. Menores de idade" },
+    body: [
+      {
+        de: "EveryCam richtet sich nicht gezielt an Kinder unter 16 Jahren. Der Anbieter erhebt wissentlich keine personenbezogenen Daten von Kindern, da die App grundsätzlich keine Daten an den Anbieter überträgt.",
+        en: "EveryCam is not specifically directed at children under the age of 16. The Provider does not knowingly collect personal data from children, as the App generally does not transmit any data to the Provider.",
+        es: "EveryCam no está dirigida específicamente a menores de 16 años. El proveedor no recopila conscientemente datos personales de menores, ya que la App, por principio, no transmite ningún dato al proveedor.",
+        pt: "O EveryCam não é direcionado especificamente a crianças menores de 16 anos. O fornecedor não coleta conscientemente dados pessoais de crianças, já que o App, em princípio, não transmite nenhum dado ao fornecedor."
+      }
+    ]
+  },
+  {
+    heading: { de: "12. Änderungen dieser Datenschutzerklärung", en: "12. Changes to This Privacy Policy", es: "12. Modificaciones de esta Política de Privacidad", pt: "12. Alterações a esta Política de Privacidade" },
+    body: [
+      {
+        de: "Der Anbieter behält sich vor, diese Datenschutzerklärung anzupassen, insbesondere bei Weiterentwicklung der App oder Änderungen der Rechtslage. Die jeweils aktuelle Fassung ist unter dieser Adresse abrufbar.",
+        en: "The Provider reserves the right to amend this Privacy Policy, in particular in the course of further development of the App or changes in the legal situation. The current version is available at this address.",
+        es: "El proveedor se reserva el derecho de modificar esta Política de Privacidad, en particular en el marco del desarrollo posterior de la App o de cambios en la situación legal. La versión vigente en cada momento está disponible en esta dirección.",
+        pt: "O fornecedor se reserva o direito de alterar esta Política de Privacidade, em especial no âmbito do desenvolvimento contínuo do App ou de mudanças na situação jurídica. A versão vigente está sempre disponível neste endereço."
+      }
+    ]
+  },
+  {
+    heading: { de: "13. Kontakt", en: "13. Contact", es: "13. Contacto", pt: "13. Contato" },
+    body: [
+      {
+        de: "Bei Fragen zum Datenschutz wenden Sie sich bitte an: torquesoul@icloud.com",
+        en: "For questions regarding data protection, please contact: torquesoul@icloud.com",
+        es: "Para consultas sobre protección de datos, póngase en contacto con: torquesoul@icloud.com",
+        pt: "Para dúvidas sobre proteção de dados, entre em contato com: torquesoul@icloud.com"
+      }
+    ]
+  }
+];
+
+let currentLang = "de";
+
+function render() {
+  document.documentElement.lang = currentLang;
+  document.querySelectorAll("[data-i18n]").forEach(el => {
+    const key = el.getAttribute("data-i18n");
+    el.textContent = meta[key][currentLang];
+  });
+  document.querySelectorAll(".provider-card [data-i18n]").forEach(el => {
+    const key = el.getAttribute("data-i18n");
+    el.textContent = provider[key][currentLang];
+  });
+
+  const content = document.getElementById("content");
+  content.innerHTML = "";
+  sections.forEach(section => {
+    const el = document.createElement("section");
+    const h2 = document.createElement("h2");
+    h2.textContent = section.heading[currentLang];
+    el.appendChild(h2);
+    section.body.forEach(block => {
+      if (Array.isArray(block)) {
+        const ul = document.createElement("ul");
+        block.forEach(item => {
+          const li = document.createElement("li");
+          li.textContent = item[currentLang];
+          ul.appendChild(li);
+        });
+        el.appendChild(ul);
+      } else {
+        const p = document.createElement("p");
+        p.textContent = block[currentLang];
+        el.appendChild(p);
+      }
+    });
+    content.appendChild(el);
+  });
+}
+
+document.querySelectorAll(".lang-switch button").forEach(btn => {
+  btn.addEventListener("click", () => {
+    currentLang = btn.getAttribute("data-lang");
+    document.querySelectorAll(".lang-switch button").forEach(b => b.classList.toggle("active", b === btn));
+    render();
+  });
+});
+
+render();
+</script>
+</body>
+</html>
