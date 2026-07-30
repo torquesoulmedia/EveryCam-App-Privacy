@@ -1,0 +1,268 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>EveryCam — Support</title>
+<style>
+  :root {
+    --background-primary: #F4E9D8;
+    --surface-panel: #EDDCC0;
+    --border-subtle: #D8C3A0;
+    --text-primary: #241B12;
+    --text-secondary: #6B5B47;
+    --action-tag: #C99B5B;
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0;
+    padding: 0;
+    background: var(--background-primary);
+    color: var(--text-primary);
+    font-family: -apple-system, "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 32px 20px 80px;
+  }
+  header.top {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-bottom: 28px;
+  }
+  h1 {
+    font-size: 1.6rem;
+    margin: 0;
+    font-weight: 700;
+  }
+  .meta {
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+  }
+  .lang-switch {
+    display: inline-flex;
+    background: var(--surface-panel);
+    border: 1px solid var(--border-subtle);
+    border-radius: 999px;
+    padding: 3px;
+    gap: 2px;
+    align-self: flex-start;
+  }
+  .lang-switch button {
+    appearance: none;
+    border: none;
+    background: transparent;
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+    font-weight: 600;
+    padding: 7px 16px;
+    border-radius: 999px;
+    cursor: pointer;
+    font-family: inherit;
+  }
+  .lang-switch button.active {
+    background: var(--background-primary);
+    color: var(--text-primary);
+  }
+  .contact-card {
+    background: var(--surface-panel);
+    border: 1px solid var(--border-subtle);
+    border-radius: 12px;
+    padding: 20px 18px;
+    margin: 20px 0 32px;
+    font-size: 0.98rem;
+    color: var(--text-primary);
+    line-height: 1.6;
+  }
+  .contact-card .label {
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+    margin-bottom: 4px;
+  }
+  .contact-card a.mail {
+    display: inline-block;
+    margin-top: 4px;
+    font-weight: 700;
+    color: var(--text-primary);
+    text-decoration: none;
+    border-bottom: 1px solid var(--action-tag);
+  }
+  section {
+    margin-bottom: 28px;
+  }
+  section h2 {
+    font-size: 1.1rem;
+    margin: 0 0 10px;
+    font-weight: 700;
+  }
+  section p, section li {
+    line-height: 1.65;
+    font-size: 0.98rem;
+    color: var(--text-primary);
+  }
+  section ul {
+    padding-left: 1.2em;
+  }
+  a { color: var(--text-primary); }
+  footer {
+    margin-top: 48px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border-subtle);
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+  }
+  footer a { color: var(--text-secondary); }
+  [data-lang-content] { display: none; }
+  [data-lang-content].active { display: block; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <div class="lang-switch" role="group" aria-label="Language">
+      <button type="button" data-lang="de" class="active">DE</button>
+      <button type="button" data-lang="en">EN</button>
+      <button type="button" data-lang="es">ES</button>
+      <button type="button" data-lang="pt">PT</button>
+    </div>
+    <div>
+      <h1 data-i18n="title"></h1>
+      <div class="meta" data-i18n="meta"></div>
+    </div>
+  </header>
+
+  <div class="contact-card">
+    <div class="label" data-i18n="contactLabel"></div>
+    <a class="mail" href="mailto:torquesoul@icloud.com">torquesoul@icloud.com</a>
+  </div>
+
+  <main id="content"></main>
+
+  <footer data-i18n="footer"></footer>
+</div>
+
+<script>
+const meta = {
+  title: {
+    de: "Support",
+    en: "Support",
+    es: "Soporte",
+    pt: "Suporte"
+  },
+  meta: {
+    de: "EveryCam · Support & Kontakt",
+    en: "EveryCam · Support & Contact",
+    es: "EveryCam · Soporte y contacto",
+    pt: "EveryCam · Suporte e contato"
+  },
+  contactLabel: {
+    de: "Support-Kontakt",
+    en: "Support contact",
+    es: "Contacto de soporte",
+    pt: "Contato de suporte"
+  },
+  footer: {
+    de: "Torque Soul Media, Inhaber Steffen Adamczyk, Bergstrasse 19, 35614 Asslar, Deutschland — siehe auch die <a href=\"index.html\">Datenschutzerklärung</a>.",
+    en: "Torque Soul Media, owner Steffen Adamczyk, Bergstrasse 19, 35614 Asslar, Germany — see also the <a href=\"index.html\">Privacy Policy</a>.",
+    es: "Torque Soul Media, titular Steffen Adamczyk, Bergstrasse 19, 35614 Asslar, Alemania — véase también la <a href=\"index.html\">Política de Privacidad</a>.",
+    pt: "Torque Soul Media, titular Steffen Adamczyk, Bergstrasse 19, 35614 Asslar, Alemanha — veja também a <a href=\"index.html\">Política de Privacidade</a>."
+  }
+};
+
+// Jede Sektion: { heading: {de,en,es,pt}, body: [ {de,en,es,pt}, ... ] } — body-Einträge sind Absätze oder Listen (Array = <ul>).
+const sections = [
+  {
+    heading: { de: "Wie erhalte ich Support?", en: "How do I get support?", es: "¿Cómo obtengo soporte?", pt: "Como obtenho suporte?" },
+    body: [
+      {
+        de: "Bei Fragen, Problemen oder Feedback zu EveryCam schreiben Sie bitte eine E-Mail an torquesoul@icloud.com. Beschreiben Sie Ihr Anliegen möglichst genau — bei technischen Problemen helfen Angaben zu iPhone-Modell, iOS-Version und den genauen Schritten bis zum Fehler.",
+        en: "For questions, problems, or feedback about EveryCam, please email torquesoul@icloud.com. Please describe your issue as precisely as possible — for technical problems, details about your iPhone model, iOS version, and the exact steps leading up to the issue are helpful.",
+        es: "Si tiene preguntas, problemas o comentarios sobre EveryCam, escriba a torquesoul@icloud.com. Describa su consulta con la mayor precisión posible; para problemas técnicos, es útil indicar el modelo de iPhone, la versión de iOS y los pasos exactos que llevaron al error.",
+        pt: "Em caso de dúvidas, problemas ou feedback sobre o EveryCam, envie um e-mail para torquesoul@icloud.com. Descreva sua solicitação com a maior precisão possível — em caso de problemas técnicos, informações sobre o modelo do iPhone, a versão do iOS e os passos exatos até o erro ajudam bastante."
+      }
+    ]
+  },
+  {
+    heading: { de: "Bearbeitungszeit", en: "Response time", es: "Tiempo de respuesta", pt: "Tempo de resposta" },
+    body: [
+      {
+        de: "Der Anbieter bemüht sich um eine zeitnahe Bearbeitung, schuldet jedoch keine bestimmten Reaktions- oder Bearbeitungszeiten, soweit nicht ausdrücklich anders vereinbart.",
+        en: "The Provider endeavours to process requests promptly but does not owe any specific response or processing times unless expressly agreed otherwise.",
+        es: "El proveedor se esfuerza por procesar las solicitudes con prontitud, pero no garantiza tiempos de respuesta o procesamiento determinados, salvo que se acuerde expresamente lo contrario.",
+        pt: "O fornecedor se esforça para um atendimento tempestivo, mas não garante prazos específicos de resposta ou processamento, salvo se expressamente acordado de outra forma."
+      }
+    ]
+  },
+  {
+    heading: { de: "Hilfe direkt in der App", en: "Help inside the App", es: "Ayuda dentro de la App", pt: "Ajuda dentro do App" },
+    body: [
+      {
+        de: "EveryCam enthält unter Einstellungen → Hilfe / Handbuch eine ausführliche Anleitung zu allen Funktionen der App, verfügbar in Deutsch, Englisch, Spanisch und brasilianischem Portugiesisch.",
+        en: "EveryCam includes a detailed guide to all app features under Settings → Help / Manual, available in German, English, Spanish, and Brazilian Portuguese.",
+        es: "EveryCam incluye una guía detallada de todas las funciones de la app en Ajustes → Ayuda / Manual, disponible en alemán, inglés, español y portugués de Brasil.",
+        pt: "O EveryCam inclui um guia detalhado de todas as funções do app em Ajustes → Ajuda / Manual, disponível em alemão, inglês, espanhol e português do Brasil."
+      }
+    ]
+  },
+  {
+    heading: { de: "Häufige Themen", en: "Common topics", es: "Temas frecuentes", pt: "Tópicos comuns" },
+    body: [
+      [
+        { de: "EveryCam speichert alle Aufnahmen ausschließlich lokal auf dem Gerät — es gibt keine Cloud-Sicherung.", en: "EveryCam stores all recordings exclusively locally on the device — there is no cloud backup.", es: "EveryCam almacena todas las capturas exclusivamente de forma local en el dispositivo — no hay copia de seguridad en la nube.", pt: "O EveryCam armazena todas as capturas exclusivamente de forma local no aparelho — não há backup em nuvem." },
+        { de: "Sammlungen lassen sich über die Sammlungen-Übersicht exportieren, um eine eigene Sicherung anzulegen.", en: "Collections can be exported from the Collections overview to create your own backup.", es: "Las colecciones se pueden exportar desde la vista general de Colecciones para crear su propia copia de seguridad.", pt: "As coleções podem ser exportadas na visão geral de Coleções para criar seu próprio backup." },
+        { de: "Beim Löschen der App gehen nicht exportierte Aufnahmen unwiderruflich verloren.", en: "Uninstalling the App irrecoverably deletes any recordings that have not been exported.", es: "Al desinstalar la App, las capturas no exportadas se pierden de forma irrecuperable.", pt: "Ao desinstalar o App, as capturas não exportadas são perdidas de forma irrecuperável." }
+      ]
+    ]
+  }
+];
+
+let currentLang = "de";
+
+function render() {
+  document.documentElement.lang = currentLang;
+  document.querySelectorAll("[data-i18n]").forEach(el => {
+    const key = el.getAttribute("data-i18n");
+    el.innerHTML = meta[key][currentLang];
+  });
+
+  const content = document.getElementById("content");
+  content.innerHTML = "";
+  sections.forEach(section => {
+    const el = document.createElement("section");
+    const h2 = document.createElement("h2");
+    h2.textContent = section.heading[currentLang];
+    el.appendChild(h2);
+    section.body.forEach(block => {
+      if (Array.isArray(block)) {
+        const ul = document.createElement("ul");
+        block.forEach(item => {
+          const li = document.createElement("li");
+          li.textContent = item[currentLang];
+          ul.appendChild(li);
+        });
+        el.appendChild(ul);
+      } else {
+        const p = document.createElement("p");
+        p.textContent = block[currentLang];
+        el.appendChild(p);
+      }
+    });
+    content.appendChild(el);
+  });
+}
+
+document.querySelectorAll(".lang-switch button").forEach(btn => {
+  btn.addEventListener("click", () => {
+    currentLang = btn.getAttribute("data-lang");
+    document.querySelectorAll(".lang-switch button").forEach(b => b.classList.toggle("active", b === btn));
+    render();
+  });
+});
+
+render();
+</script>
+</body>
+</html>
