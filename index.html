@@ -350,13 +350,15 @@ let currentLang = "de";
 
 function render() {
   document.documentElement.lang = currentLang;
+  // meta und provider sind zwei getrennte Wörterbücher, teilen sich aber
+  // dasselbe data-i18n-Attribut — ein einzelnes querySelectorAll("[data-i18n]")
+  // muss daher in beiden nachschlagen, sonst wirft der Zugriff auf ein in
+  // meta fehlendes Provider-Feld (z. B. "owner") eine Exception und bricht
+  // render() vor den Sections/dem Footer ab (Bugfix, 2026-07-30).
   document.querySelectorAll("[data-i18n]").forEach(el => {
     const key = el.getAttribute("data-i18n");
-    el.textContent = meta[key][currentLang];
-  });
-  document.querySelectorAll(".provider-card [data-i18n]").forEach(el => {
-    const key = el.getAttribute("data-i18n");
-    el.textContent = provider[key][currentLang];
+    const dict = meta[key] ?? provider[key];
+    el.textContent = dict[currentLang];
   });
 
   const content = document.getElementById("content");
