@@ -44,6 +44,7 @@
   }
   .lang-switch {
     display: inline-flex;
+    flex-wrap: wrap;
     background: var(--surface-panel);
     border: 1px solid var(--border-subtle);
     border-radius: 999px;
@@ -58,7 +59,7 @@
     color: var(--text-secondary);
     font-size: 0.85rem;
     font-weight: 600;
-    padding: 7px 16px;
+    padding: 7px 14px;
     border-radius: 999px;
     cursor: pointer;
     font-family: inherit;
@@ -127,6 +128,10 @@
       <button type="button" data-lang="en">EN</button>
       <button type="button" data-lang="es">ES</button>
       <button type="button" data-lang="pt">PT</button>
+      <button type="button" data-lang="fr">FR</button>
+      <button type="button" data-lang="it">IT</button>
+      <button type="button" data-lang="nl">NL</button>
+      <button type="button" data-lang="pl">PL</button>
     </div>
     <div>
       <h1 data-i18n="title"></h1>
@@ -150,70 +155,98 @@ const meta = {
     de: "Support",
     en: "Support",
     es: "Soporte",
-    pt: "Suporte"
+    pt: "Suporte",
+    fr: "Assistance",
+    it: "Assistenza",
+    nl: "Ondersteuning",
+    pl: "Wsparcie"
   },
   meta: {
     de: "EveryCam · Support & Kontakt",
     en: "EveryCam · Support & Contact",
     es: "EveryCam · Soporte y contacto",
-    pt: "EveryCam · Suporte e contato"
+    pt: "EveryCam · Suporte e contato",
+    fr: "EveryCam · Assistance et contact",
+    it: "EveryCam · Assistenza e contatti",
+    nl: "EveryCam · Ondersteuning en contact",
+    pl: "EveryCam · Wsparcie i kontakt"
   },
   contactLabel: {
     de: "Support-Kontakt",
     en: "Support contact",
     es: "Contacto de soporte",
-    pt: "Contato de suporte"
+    pt: "Contato de suporte",
+    fr: "Contact assistance",
+    it: "Contatto assistenza",
+    nl: "Contact voor ondersteuning",
+    pl: "Kontakt wsparcia"
   },
   footer: {
     de: "Torque Soul Media, Inhaber Steffen Adamczyk, Bergstrasse 19, 35614 Asslar, Deutschland — siehe auch die <a href=\"index.html\">Datenschutzerklärung</a>.",
     en: "Torque Soul Media, owner Steffen Adamczyk, Bergstrasse 19, 35614 Asslar, Germany — see also the <a href=\"index.html\">Privacy Policy</a>.",
     es: "Torque Soul Media, titular Steffen Adamczyk, Bergstrasse 19, 35614 Asslar, Alemania — véase también la <a href=\"index.html\">Política de Privacidad</a>.",
-    pt: "Torque Soul Media, titular Steffen Adamczyk, Bergstrasse 19, 35614 Asslar, Alemanha — veja também a <a href=\"index.html\">Política de Privacidade</a>."
+    pt: "Torque Soul Media, titular Steffen Adamczyk, Bergstrasse 19, 35614 Asslar, Alemanha — veja também a <a href=\"index.html\">Política de Privacidade</a>.",
+    fr: "Torque Soul Media, propriétaire Steffen Adamczyk, Bergstrasse 19, 35614 Asslar, Allemagne — voir aussi la <a href=\"index.html\">politique de confidentialité</a>.",
+    it: "Torque Soul Media, titolare Steffen Adamczyk, Bergstrasse 19, 35614 Asslar, Germania — vedere anche l'<a href=\"index.html\">informativa sulla privacy</a>.",
+    nl: "Torque Soul Media, eigenaar Steffen Adamczyk, Bergstrasse 19, 35614 Asslar, Duitsland — zie ook het <a href=\"index.html\">privacybeleid</a>.",
+    pl: "Torque Soul Media, właściciel Steffen Adamczyk, Bergstrasse 19, 35614 Asslar, Niemcy — zobacz też <a href=\"index.html\">politykę prywatności</a>."
   }
 };
 
-// Jede Sektion: { heading: {de,en,es,pt}, body: [ {de,en,es,pt}, ... ] } — body-Einträge sind Absätze oder Listen (Array = <ul>).
+// Jede Sektion: { heading: {de,en,es,pt,fr,it,nl,pl}, body: [ {de,en,es,pt,fr,it,nl,pl}, ... ] } — body-Einträge sind Absätze oder Listen (Array = <ul>).
 const sections = [
   {
-    heading: { de: "Wie erhalte ich Support?", en: "How do I get support?", es: "¿Cómo obtengo soporte?", pt: "Como obtenho suporte?" },
+    heading: { de: "Wie erhalte ich Support?", en: "How do I get support?", es: "¿Cómo obtengo soporte?", pt: "Como obtenho suporte?", fr: "Comment puis-je obtenir de l'aide ?", it: "Come posso ricevere assistenza?", nl: "Hoe krijg ik ondersteuning?", pl: "Jak uzyskać wsparcie?" },
     body: [
       {
         de: "Bei Fragen, Problemen oder Feedback zu EveryCam schreiben Sie bitte eine E-Mail an torquesoul@icloud.com. Beschreiben Sie Ihr Anliegen möglichst genau — bei technischen Problemen helfen Angaben zu iPhone-Modell, iOS-Version und den genauen Schritten bis zum Fehler.",
         en: "For questions, problems, or feedback about EveryCam, please email torquesoul@icloud.com. Please describe your issue as precisely as possible — for technical problems, details about your iPhone model, iOS version, and the exact steps leading up to the issue are helpful.",
         es: "Si tiene preguntas, problemas o comentarios sobre EveryCam, escriba a torquesoul@icloud.com. Describa su consulta con la mayor precisión posible; para problemas técnicos, es útil indicar el modelo de iPhone, la versión de iOS y los pasos exactos que llevaron al error.",
-        pt: "Em caso de dúvidas, problemas ou feedback sobre o EveryCam, envie um e-mail para torquesoul@icloud.com. Descreva sua solicitação com a maior precisão possível — em caso de problemas técnicos, informações sobre o modelo do iPhone, a versão do iOS e os passos exatos até o erro ajudam bastante."
+        pt: "Em caso de dúvidas, problemas ou feedback sobre o EveryCam, envie um e-mail para torquesoul@icloud.com. Descreva sua solicitação com a maior precisão possível — em caso de problemas técnicos, informações sobre o modelo do iPhone, a versão do iOS e os passos exatos até o erro ajudam bastante.",
+        fr: "Pour toute question, problème ou retour concernant EveryCam, veuillez envoyer un e-mail à torquesoul@icloud.com. Décrivez votre demande aussi précisément que possible — pour les problèmes techniques, indiquer le modèle d'iPhone, la version d'iOS et les étapes exactes menant à l'erreur est utile.",
+        it: "Per domande, problemi o feedback su EveryCam, scrivere un'e-mail a torquesoul@icloud.com. Descrivere la richiesta nel modo più preciso possibile — per problemi tecnici sono utili indicazioni sul modello di iPhone, la versione di iOS e i passaggi esatti che hanno portato all'errore.",
+        nl: "Heeft u vragen, problemen of feedback over EveryCam, stuur dan een e-mail naar torquesoul@icloud.com. Beschrijf uw verzoek zo nauwkeurig mogelijk — bij technische problemen helpen gegevens over uw iPhone-model, iOS-versie en de exacte stappen die tot de fout hebben geleid.",
+        pl: "W przypadku pytań, problemów lub opinii dotyczących EveryCam prosimy o e-mail na adres torquesoul@icloud.com. Opisz swoją sprawę możliwie dokładnie — w przypadku problemów technicznych pomocne są informacje o modelu iPhone'a, wersji iOS oraz dokładnych krokach prowadzących do błędu."
       }
     ]
   },
   {
-    heading: { de: "Bearbeitungszeit", en: "Response time", es: "Tiempo de respuesta", pt: "Tempo de resposta" },
+    heading: { de: "Bearbeitungszeit", en: "Response time", es: "Tiempo de respuesta", pt: "Tempo de resposta", fr: "Délai de traitement", it: "Tempi di gestione", nl: "Verwerkingstijd", pl: "Czas realizacji" },
     body: [
       {
         de: "Der Anbieter bemüht sich um eine zeitnahe Bearbeitung, schuldet jedoch keine bestimmten Reaktions- oder Bearbeitungszeiten, soweit nicht ausdrücklich anders vereinbart.",
         en: "The Provider endeavours to process requests promptly but does not owe any specific response or processing times unless expressly agreed otherwise.",
         es: "El proveedor se esfuerza por procesar las solicitudes con prontitud, pero no garantiza tiempos de respuesta o procesamiento determinados, salvo que se acuerde expresamente lo contrario.",
-        pt: "O fornecedor se esforça para um atendimento tempestivo, mas não garante prazos específicos de resposta ou processamento, salvo se expressamente acordado de outra forma."
+        pt: "O fornecedor se esforça para um atendimento tempestivo, mas não garante prazos específicos de resposta ou processamento, salvo se expressamente acordado de outra forma.",
+        fr: "Le fournisseur s'efforce de traiter les demandes rapidement, mais ne garantit aucun délai de réponse ou de traitement spécifique, sauf convention contraire expresse.",
+        it: "Il fornitore si impegna a gestire le richieste tempestivamente, ma non è tenuto a rispettare tempi di risposta o di gestione specifici, salvo diverso accordo espresso.",
+        nl: "De aanbieder streeft naar een snelle afhandeling, maar is niet verplicht tot specifieke reactie- of verwerkingstijden, tenzij uitdrukkelijk anders overeengekomen.",
+        pl: "Dostawca dokłada starań, aby rozpatrywać zgłoszenia na bieżąco, jednak nie jest zobowiązany do zachowania określonych czasów reakcji ani rozpatrzenia, chyba że wyraźnie uzgodniono inaczej."
       }
     ]
   },
   {
-    heading: { de: "Hilfe direkt in der App", en: "Help inside the App", es: "Ayuda dentro de la App", pt: "Ajuda dentro do App" },
+    heading: { de: "Hilfe direkt in der App", en: "Help inside the App", es: "Ayuda dentro de la App", pt: "Ajuda dentro do App", fr: "Aide directement dans l'application", it: "Guida direttamente nell'app", nl: "Hulp rechtstreeks in de app", pl: "Pomoc bezpośrednio w aplikacji" },
     body: [
       {
-        de: "EveryCam enthält unter Einstellungen → Hilfe / Handbuch eine ausführliche Anleitung zu allen Funktionen der App, verfügbar in Deutsch, Englisch, Spanisch und brasilianischem Portugiesisch.",
-        en: "EveryCam includes a detailed guide to all app features under Settings → Help / Manual, available in German, English, Spanish, and Brazilian Portuguese.",
-        es: "EveryCam incluye una guía detallada de todas las funciones de la app en Ajustes → Ayuda / Manual, disponible en alemán, inglés, español y portugués de Brasil.",
-        pt: "O EveryCam inclui um guia detalhado de todas as funções do app em Ajustes → Ajuda / Manual, disponível em alemão, inglês, espanhol e português do Brasil."
+        de: "EveryCam enthält unter Einstellungen → Hilfe / Handbuch eine ausführliche Anleitung zu allen Funktionen der App, verfügbar in Deutsch, Englisch, Spanisch, brasilianischem Portugiesisch, Französisch, Italienisch, Niederländisch und Polnisch.",
+        en: "EveryCam includes a detailed guide to all app features under Settings → Help / Manual, available in German, English, Spanish, Brazilian Portuguese, French, Italian, Dutch, and Polish.",
+        es: "EveryCam incluye una guía detallada de todas las funciones de la app en Ajustes → Ayuda / Manual, disponible en alemán, inglés, español, portugués de Brasil, francés, italiano, neerlandés y polaco.",
+        pt: "O EveryCam inclui um guia detalhado de todas as funções do app em Ajustes → Ajuda / Manual, disponível em alemão, inglês, espanhol, português do Brasil, francês, italiano, holandês e polonês.",
+        fr: "EveryCam propose, dans Réglages → Aide / Manuel, un guide détaillé de toutes les fonctionnalités de l'application, disponible en allemand, anglais, espagnol, portugais brésilien, français, italien, néerlandais et polonais.",
+        it: "EveryCam include, in Impostazioni → Guida / Manuale, una guida dettagliata a tutte le funzioni dell'app, disponibile in tedesco, inglese, spagnolo, portoghese brasiliano, francese, italiano, olandese e polacco.",
+        nl: "EveryCam bevat onder Instellingen → Hulp / Handleiding een uitgebreide handleiding voor alle appfuncties, beschikbaar in het Duits, Engels, Spaans, Braziliaans-Portugees, Frans, Italiaans, Nederlands en Pools.",
+        pl: "EveryCam zawiera w Ustawieniach → Pomoc / Instrukcja szczegółowy przewodnik po wszystkich funkcjach aplikacji, dostępny w językach: niemieckim, angielskim, hiszpańskim, brazylijskim portugalskim, francuskim, włoskim, niderlandzkim i polskim."
       }
     ]
   },
   {
-    heading: { de: "Häufige Themen", en: "Common topics", es: "Temas frecuentes", pt: "Tópicos comuns" },
+    heading: { de: "Häufige Themen", en: "Common topics", es: "Temas frecuentes", pt: "Tópicos comuns", fr: "Sujets fréquents", it: "Argomenti frequenti", nl: "Veelvoorkomende onderwerpen", pl: "Najczęstsze tematy" },
     body: [
       [
-        { de: "EveryCam speichert alle Aufnahmen ausschließlich lokal auf dem Gerät — es gibt keine Cloud-Sicherung.", en: "EveryCam stores all recordings exclusively locally on the device — there is no cloud backup.", es: "EveryCam almacena todas las capturas exclusivamente de forma local en el dispositivo — no hay copia de seguridad en la nube.", pt: "O EveryCam armazena todas as capturas exclusivamente de forma local no aparelho — não há backup em nuvem." },
-        { de: "Sammlungen lassen sich über die Sammlungen-Übersicht exportieren, um eine eigene Sicherung anzulegen.", en: "Collections can be exported from the Collections overview to create your own backup.", es: "Las colecciones se pueden exportar desde la vista general de Colecciones para crear su propia copia de seguridad.", pt: "As coleções podem ser exportadas na visão geral de Coleções para criar seu próprio backup." },
-        { de: "Beim Löschen der App gehen nicht exportierte Aufnahmen unwiderruflich verloren.", en: "Uninstalling the App irrecoverably deletes any recordings that have not been exported.", es: "Al desinstalar la App, las capturas no exportadas se pierden de forma irrecuperable.", pt: "Ao desinstalar o App, as capturas não exportadas são perdidas de forma irrecuperável." }
+        { de: "EveryCam speichert alle Aufnahmen ausschließlich lokal auf dem Gerät — es gibt keine Cloud-Sicherung.", en: "EveryCam stores all recordings exclusively locally on the device — there is no cloud backup.", es: "EveryCam almacena todas las capturas exclusivamente de forma local en el dispositivo — no hay copia de seguridad en la nube.", pt: "O EveryCam armazena todas as capturas exclusivamente de forma local no aparelho — não há backup em nuvem.", fr: "EveryCam stocke toutes les captures exclusivement en local sur l'appareil — il n'y a aucune sauvegarde dans le cloud.", it: "EveryCam salva tutte le riprese esclusivamente in locale sul dispositivo — non esiste alcun backup nel cloud.", nl: "EveryCam slaat alle opnamen uitsluitend lokaal op het apparaat op — er is geen cloudback-up.", pl: "EveryCam przechowuje wszystkie nagrania wyłącznie lokalnie na urządzeniu — nie ma kopii zapasowej w chmurze." },
+        { de: "Sammlungen lassen sich über die Sammlungen-Übersicht exportieren, um eine eigene Sicherung anzulegen.", en: "Collections can be exported from the Collections overview to create your own backup.", es: "Las colecciones se pueden exportar desde la vista general de Colecciones para crear su propia copia de seguridad.", pt: "As coleções podem ser exportadas na visão geral de Coleções para criar seu próprio backup.", fr: "Les collections peuvent être exportées depuis l'aperçu des collections pour créer votre propre sauvegarde.", it: "Le raccolte possono essere esportate dalla panoramica delle raccolte per creare un backup personale.", nl: "Collecties kunnen worden geëxporteerd vanuit het collectieoverzicht om een eigen back-up te maken.", pl: "Kolekcje można eksportować z widoku kolekcji, aby utworzyć własną kopię zapasową." },
+        { de: "Beim Löschen der App gehen nicht exportierte Aufnahmen unwiderruflich verloren.", en: "Uninstalling the App irrecoverably deletes any recordings that have not been exported.", es: "Al desinstalar la App, las capturas no exportadas se pierden de forma irrecuperable.", pt: "Ao desinstalar o App, as capturas não exportadas são perdidas de forma irrecuperável.", fr: "La suppression de l'application entraîne la perte irrémédiable des captures non exportées.", it: "Disinstallando l'app, le riprese non esportate vengono perse irrimediabilmente.", nl: "Bij het verwijderen van de app gaan niet-geëxporteerde opnamen onherstelbaar verloren.", pl: "Odinstalowanie aplikacji powoduje bezpowrotną utratę nieeksportowanych nagrań." }
       ]
     ]
   }
